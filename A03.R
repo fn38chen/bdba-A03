@@ -16,9 +16,35 @@ library(ggplot2)
 
 # 6.2 Applied ####
 # [Q3] ####
+#--- Load the package
+library("twitteR")
+
+#----------------------------------------------------------
+# Authentication using Ouath
+#----------------------------------------------------------
+
+consumer_key        <- "KZP7gvkPInzuWlVrrs8LciXvl"
+consumer_secret     <- "Y8ov2XrLcnALCRVszSHofaQJ2vkmO8sQG6ojnhYJM1tPbslzsz"
+access_token        <- "752914709670686720-Q9AE1fkjd6aZhqAiMiyvX2xBTWKoj6n"
+access_token_secret <- "KNgyyCc6Ys6vIMDhGIGYiW9Fmk5oaJROS580hBt4AL2qw"
+
+setup_twitter_oauth(consumer_key,consumer_secret,access_token,access_token_secret)
+
+#----------------------------------------------------------
+# Get tweets 
+#----------------------------------------------------------
+myTweet <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
+
+#--- Check structure of myTweets 
+myTweets
+
+
 # [Q3](a) ####
 # [Q3](b) ####
 # [Q4] ####
+
+
+
 # Data source 
 # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
 # Data Documentation
