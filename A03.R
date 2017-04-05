@@ -36,6 +36,9 @@ setup_twitter_oauth(consumer_key,consumer_secret,access_token,access_token_secre
 #----------------------------------------------------------
 # Get tweets 
 #----------------------------------------------------------
+############################ TINA QUESTION [Q3] START ###########################################
+# ---------------------------------------------------------------------------------------------#
+
 TweetIndiedev <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
 <<<<<<< HEAD
 TweetOnlinemarketing <- searchTwitter('#onlinemarketing', since="2017-04-02", until="2017-04-04",n=1000)
@@ -78,6 +81,12 @@ TweetIndiedev
 TweetLongtail
 TweetEV
 
+############################ TINA QUESTION [Q3] END ###########################################
+# ---------------------------------------------------------------------------------------------#
+
+############################ FANGNING QUESTION [Q3] START ###########################################
+# ---------------------------------------------------------------------------------------------#
+
 #--- Cleaning TweetEV
 # Removing re-tweets
 
@@ -89,14 +98,15 @@ hist(dt.EV$n_chr)
 
 #--- Graphical Ilustrative relevant features for TweetEV 
 library(ggplot2)
->>>>>>> 7f6e4fce53bef96f4baf550dd587f9788ac31f16
+
+############################ FANGNING QUESTION [Q3] END ###########################################
+# ---------------------------------------------------------------------------------------------#
+
 
 
 # [Q3](a) ####
 # [Q3](b) ####
 # [Q4] ####
-
-
 
 # Data source 
 # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
