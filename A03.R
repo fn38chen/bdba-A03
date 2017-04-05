@@ -10,7 +10,19 @@ library(ggplot2)
 # 6.1 Conceptual ####
 # [Q1] ####
 # [Q1](a) ####
+# answer from the book ##
+install.packages("ISLR")
+library(ISLR)
+set.seed(1)
+dsc = scale(USArrests)
+a = dist(dsc)^2
+b = as.dist(1 - cor(t(dsc)))
+summary(b/a)
+# Question: do we have to do this exercise in paper or in R but manually for computation. 
 # [Q1](b) ####
+
+
+
 # [Q1](c) ####
 # [Q2] ####
 
@@ -98,22 +110,85 @@ hist(dt.EV$n_chr)
 
 #--- Graphical Ilustrative relevant features for TweetEV 
 library(ggplot2)
+# EV WORD Cloud #####
+
+# Query 
+tweets <- searchTwitter("#EV", lang="en",n=1000, since="2017-04-02", until="2017-04-04")
+
+# Clean up tweets 
+tweets_text <- sapply(tweets, function(x) x$getText())
+
+words <- Corpus(VectorSource(tweets_text)) # Get only the text of the tweet
+words <- tm_map(words, function(x) # Create a corpus from tweets
+  iconv(x, to="UTF-8", sub="byte")) 
+words <- tm_map(words, function(x) # Remove emoji
+  gsub("(f|ht)tp(s?)://(.*)[.][a-z]+","", x))
+words <- tm_map(words, tolower) # All words lowercase
+words <- tm_map(words, PlainTextDocument) # Get plain text
+words <- tm_map(words, removePunctuation) # Remove punctuations
+words <- tm_map(words, removeWords, stopwords("english")) # Remove stop words
+words <- tm_map(words, removeNumbers) # Remove numbers
+words <- tm_map(words, stripWhitespace) # Remove extra white spaces
+words <- tm_map(words, removeWords, c("#EV")) # Remove specific "#EV"
+
+# Building and output the 50 words most frequent used in a wordcloud
+wordcloud(words$content[[1]], scale=c(5,0.5), 
+          max.words=50,
+          rot.per=0.20,
+          colors=brewer.pal(8, "Dark2"))
+
+# [Q3](b) ####
+# User: ElectroMotiveLA
+
+ElectroMotiveLATimeLine <- userTimeline("ElectroMotiveLA", n = 1000)
+
+ElectroMotiveLATimeLine
+
+str(ElectroMotiveLATimeLine[[5]])
+ElectroMotiveLATimeLine[[5]]$getText()
+
+dsElectroMotiveLATweets <- twListToDF(ElectroMotiveLATimeLine)
+View(dsElectroMotiveLATweets)
+dsElectroMotiveLATweets$text
+
+summary(dsElectroMotiveLATweets)
+
 
 ############################ FANGNING QUESTION [Q3] END ###########################################
 # ---------------------------------------------------------------------------------------------#
 
-
-
 # [Q3](a) ####
 # [Q3](b) ####
+
+
 # [Q4] ####
 
-# Data source 
-# https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
+# Data source # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
 # Data Documentation
 # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.names
 dt.wine <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header = FALSE)
 
+# Packages we require to do this exercise 
+library("rpart")
+library("rpart.plot")
+library("cluster") 
+library("ape")
+
+# Setting names 
+colnames(dt.wine) <- c('class','Alcohol','Malic acid','Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids',
+                       'Nonflavanoid phenols','Proanthocyanins','Color intensity','Hue','OD280/OD315 of diluted wines',
+                        'Proline')
+
+# According to the documentation of this dataset, all attributes are continuous
 # [Q4](a) ####
+summary(dt.wine)
+str(dt.wine)
+table(dt.wine$class)
+
+dt.wine <- dt.wine[-c("")]
+# Scale the variables used in our analysis
+dt.wine2 <-  scale(dt.wine[2:14])
+
+
 # [Q4](b) ####
 
