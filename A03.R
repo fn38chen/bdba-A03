@@ -17,7 +17,10 @@ library(ggplot2)
 # 6.2 Applied ####
 # [Q3] ####
 #--- Load the package
-library("twitteR")
+library(twitteR)
+library(tm)
+library(wordcloud)
+library(data.table)
 
 #----------------------------------------------------------
 # Authentication using Ouath
@@ -34,6 +37,7 @@ setup_twitter_oauth(consumer_key,consumer_secret,access_token,access_token_secre
 # Get tweets 
 #----------------------------------------------------------
 TweetIndiedev <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
+<<<<<<< HEAD
 TweetOnlinemarketing <- searchTwitter('#onlinemarketing', since="2017-04-02", until="2017-04-04",n=1000)
 
 #--- Check structure of myTweets 
@@ -64,6 +68,28 @@ nrow(dt.PureSetOnlinemarketing)
 
 str(dt.PureSetIndiedev)
 str(dt.PureSetOnlinemarketing)
+=======
+TweetLongtail <- searchTwitter('#longtail', since="2017-04-02", until="2017-04-04",n=1000)
+TweetEV <- searchTwitter('#EV', since="2017-04-02", until="2017-04-04",n=1000)
+
+
+#--- Check structure of myTweets 
+TweetIndiedev
+TweetLongtail
+TweetEV
+
+#--- Cleaning TweetEV
+# Removing re-tweets
+
+# Converting to Data.frame 
+dsTweetEV <- twListToDF(TweetEV)
+dt.EV <- as.data.table(dsTweetEV)
+dt.EV <- dt.EV[, n_chr := nchar(dt.EV$text)]
+hist(dt.EV$n_chr)
+
+#--- Graphical Ilustrative relevant features for TweetEV 
+library(ggplot2)
+>>>>>>> 7f6e4fce53bef96f4baf550dd587f9788ac31f16
 
 
 # [Q3](a) ####
