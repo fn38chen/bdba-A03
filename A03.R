@@ -33,10 +33,12 @@ setup_twitter_oauth(consumer_key,consumer_secret,access_token,access_token_secre
 #----------------------------------------------------------
 # Get tweets 
 #----------------------------------------------------------
-myTweet <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
+TweetIndiedev <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
+TweetLongtail <- searchTwitter('#longtail', since="2017-04-02", until="2017-04-04",n=1000)
 
 #--- Check structure of myTweets 
-myTweets
+TweetIndiedev
+TweetLongtail
 
 
 # [Q3](a) ####
