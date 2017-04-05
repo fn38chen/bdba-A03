@@ -34,11 +34,36 @@ setup_twitter_oauth(consumer_key,consumer_secret,access_token,access_token_secre
 # Get tweets 
 #----------------------------------------------------------
 TweetIndiedev <- searchTwitter('#indiedev', since="2017-04-02", until="2017-04-04",n=1000)
-TweetLongtail <- searchTwitter('#longtail', since="2017-04-02", until="2017-04-04",n=1000)
+TweetOnlinemarketing <- searchTwitter('#onlinemarketing', since="2017-04-02", until="2017-04-04",n=1000)
 
 #--- Check structure of myTweets 
-TweetIndiedev
-TweetLongtail
+##Removing re-tweets
+pureSetIndiedev <- strip_retweets(TweetIndiedev,
+                    strip_manual=TRUE,
+                    strip_mt=TRUE)
+
+pureSetOnlinemarketing <- strip_retweets(TweetOnlinemarketing,
+                    strip_manual=TRUE,
+                    strip_mt=TRUE)
+
+?strip_retweets
+
+
+##Store Tweets in a data frame
+dt.PureSetIndiedev <- twListToDF(pureSetIndiedev)
+dt.PureSetOnlinemarketing <- twListToDF(pureSetOnlinemarketing)
+
+View(dt.PureSetIndiedev)
+View(dt.PureSetOnlinemarketing)
+
+colnames(dt.PureSetIndiedev)
+colnames(dt.PureSetOnlinemarketing
+
+nrow(dt.PureSetIndiedev)
+nrow(dt.PureSetOnlinemarketing)
+
+str(dt.PureSetIndiedev)
+str(dt.PureSetOnlinemarketing)
 
 
 # [Q3](a) ####
