@@ -28,6 +28,3 @@ dt.wine <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/wine
 # [Q4](a) ####
 # [Q4](b) ####
 
-
-# Hello World! 
-#Hello again
