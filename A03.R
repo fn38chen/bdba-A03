@@ -3,6 +3,7 @@
 
 # Load packages 
 library(data.table)
+library(ggplot2)
 
 # Assignment
 
