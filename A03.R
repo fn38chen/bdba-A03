@@ -186,13 +186,11 @@ str(dt.wine)
 table(dt.wine$class)
 View (dt.wine)
 
-dt.wine <- dt.wine[-c("")]
-
 #Delete the class column as it is not needed in the analysis
 dt.wine <- dt.wine[, class := NULL]
 
 # Scale the variables used in our analysis
-dt.wine2 <-  scale(dt.wine[1:14])
+dt.wine2 <-  scale(dt.wine[,2:14])
 
 str(dt.wine2)
 View (dt.wine2)
@@ -203,6 +201,35 @@ View (dt.wine2)
 # ---------------------------------------------------------------------------------------------#
 ############################ FANGNING QUESTION [Q4] START ###########################################
 # ---------------------------------------------------------------------------------------------#
+cluster_model3 <- kmeans(dt.wine2, 3, nstart=20) 
+
+# Cluster Plot against 1st 2 principal components
+clusplot(dt.wine2, cluster_model3$cluster, color=TRUE, 
+         shade=TRUE, labels=2, lines=0)
+
+
+lm(dt.wine)
+
+# [Q4](b) #### 
+# Add the cluster values to the original data set
+dt.wine2<- data.frame(dt.wine2, 
+                       cluster=as.factor(cluster_model3$cluster))
+
+# Visualize the instances in the third cluster
+#View(whiskies[whiskies$cluster == 3, ])
+
+# A decision tree model to explain Cluster memberships
+model_1 <- cluster ~ . 
+tree1 <- rpart(model_1, 
+             data = dt.wine2,
+             method = "class", 
+             parms=list(split="information"))
+
+
+# Plot the decision tree
+rpart.plot(tree1, box.col= c("pink","green","yellow","grey")[tree1$frame$yval], extra = 4)
+
+
 ############################ FANGNING QUESTION [Q4] END###########################################
 # ---------------------------------------------------------------------------------------------#
 
