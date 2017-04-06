@@ -162,7 +162,7 @@ summary(dsElectroMotiveLATweets)
 
 
 # [Q4] ####
-
+library ("data.table")
 # Data source # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
 # Data Documentation
 # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.names
@@ -184,11 +184,27 @@ colnames(dt.wine) <- c('class','Alcohol','Malic acid','Ash', 'Alcalinity of ash'
 summary(dt.wine)
 str(dt.wine)
 table(dt.wine$class)
+View (dt.wine)
 
 dt.wine <- dt.wine[-c("")]
-# Scale the variables used in our analysis
-dt.wine2 <-  scale(dt.wine[2:14])
 
+#Delete the class column as it is not needed in the analysis
+dt.wine <- dt.wine[, class := NULL]
+
+# Scale the variables used in our analysis
+dt.wine2 <-  scale(dt.wine[1:14])
+
+str(dt.wine2)
+View (dt.wine2)
+
+############################ TIINA QUESTION [Q4] START ###########################################
+# ---------------------------------------------------------------------------------------------#
+############################ TIINA QUESTION [Q4] END ###########################################
+# ---------------------------------------------------------------------------------------------#
+############################ FANGNING QUESTION [Q4] START ###########################################
+# ---------------------------------------------------------------------------------------------#
+############################ FANGNING QUESTION [Q4] END###########################################
+# ---------------------------------------------------------------------------------------------#
 
 # [Q4](b) ####
 
