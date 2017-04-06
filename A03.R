@@ -168,6 +168,8 @@ library ("data.table")
 # https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.names
 dt.wine <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header = FALSE)
 
+nrow(dt.wine)
+
 # Packages we require to do this exercise 
 library("rpart")
 library("rpart.plot")
@@ -187,16 +189,67 @@ table(dt.wine$class)
 View (dt.wine)
 
 #Delete the class column as it is not needed in the analysis
-dt.wine <- dt.wine[, class := NULL]
+# dt.wine <- dt.wine[, class := NULL]
 
 # Scale the variables used in our analysis
 dt.wine2 <-  scale(dt.wine[,2:14])
 
 str(dt.wine2)
 View (dt.wine2)
+nrow(dt.wine2)
 
 ############################ TIINA QUESTION [Q4] START ###########################################
 # ---------------------------------------------------------------------------------------------#
+library ("cluster")\
+library("ape")
+dt.wine <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header = FALSE)
+colnames(dt.wine) <- c('class','Alcohol','Malic acid','Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids',
+                       'Nonflavanoid phenols','Proanthocyanins','Color intensity','Hue','OD280/OD315 of diluted wines',
+                       'Proline')
+
+nrow (dt.wine)
+
+dt.wine2 <-  scale(dt.wine[,2:14])
+
+nrow (dt.wine2)
+View (dt.wine2)
+
+dt.wine3 <- dt.wine2
+nrow(dt.wine3)
+
+nClusters <- 3
+cluster_model <- kmeans (dt.wine3, nClusters, nstart = 20)
+
+clusplot(dt.wine3, cluster_model$cluster, color=TRUE, 
+         shade=TRUE, labels=2, lines=0)
+
+#Add a comparison of nClusters with 2 and 4 --> doesn't make sense
+#to increase as the overlapping is becoming significant
+#With 2, it does not make sense as there is lower information and the overlapping is comparable
+#to the one with 3 clusters
+
+#Add cluster values to the original dataset
+dt.wine3 <- data.frame(dt.wine3, 
+                       cluster=as.factor(cluster_model$cluster))
+
+View (dt.wine3)
+# Visualize the instances in the third cluster
+View(dt.wine3[dt.wine3$cluster == 1, ])
+
+
+# A decision tree model to explain Cluster memberships
+tree<-rpart(cluster ~ ., 
+            data = dt.wine3,
+            method = "class", 
+            parms=list(split="information"))
+
+?rpart
+
+
+# Plot the decision tree
+rpart.plot(tree, box.col= c("pink","green","yellow")[tree$frame$yval], extra = 4)
+
+
 ############################ TIINA QUESTION [Q4] END ###########################################
 # ---------------------------------------------------------------------------------------------#
 ############################ FANGNING QUESTION [Q4] START ###########################################
